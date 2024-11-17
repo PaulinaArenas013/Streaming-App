@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Media</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles_add_media.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <img class="nav__logo" src="{{ url_for('static', filename='img/blockbuster-logo.png') }}" alt="Blockbster Logo" />
+            <br>
+            <a href="/">Regresar a la página principal</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Add Media</h1>
+        <form action="{{ url_for('upload_image') }}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description" required>
+            </div>
+            <div class="form-group">
+                <label for="file">File:</label>
+                <input type="file" id="file" name="file" required>
+            </div>
+            <button type="submit" value="Upload">Upload</button>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2024 My Media App UPMP</p>
+    </footer>
+</body>
+</html>

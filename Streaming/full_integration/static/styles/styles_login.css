@@ -1,0 +1,23 @@
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #003682;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, #003682, #2c9bfe);
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, #003682, #2c9bfe)
+}
+
+.nav__logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 150px;
+    margin-bottom: 0;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    padding: 5px;
+  }
+
+  

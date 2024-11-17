@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockbuster - Media Gallery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles_display_media.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <div id="nav" class="nav">
+        <img class="nav__logo" src="{{ url_for('static', filename='img/blockbuster-logo.png') }}" alt="Blockbster Logo" />
+        <img class="nav__avatar" src="{{ url_for('static', filename='img/avatar-user.png') }}" alt="User Avatar" />
+    </div>
+    <!-- Header/Banner -->
+    <header class="banner">
+        <div class="banner__contents">
+            <h1 class="banner__title">Harry Potter</h1>
+            <div class="banner__buttons">
+                <button class="banner__button">Play</button>
+                <button class="banner__button">+ My List</button>
+            </div>
+            <h1 class="banner__description">
+                El enfrentamiento entre el bien y el mal llega a su cénit. La búsqueda de los horrocruxes lleva a los amigos a Hogwarts, donde Harry, Ron y Hermione se preparan para una última batalla contra Lord Voldemort.
+            </h1>
+        </div>
+        <div class="banner--fadeBottom"></div>
+    </header>
+   <!-- Media Rows -->
+    <div class="row">
+        <h2>Media Gallery</h2>
+        <div class="row__posters">
+            {% for media in media_list %}
+                <div class="grid-item">
+                    {% if media.media_name.endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
+                        <!-- Display thumbnail for images -->
+                        <img class="row__poster" src="{{ url_for('get_thumbnail', media_id=media.id) }}" alt="{{ media.media_name }}">
+                    {% elif media.media_name.endswith(('.mp4', '.webm', '.ogg')) %}
+                        <!-- Display video for video files -->
+                        <video class="row__poster" controls>
+                            <source src="{{ url_for('get_image', media_id=media.id) }}" type="video/{{ media.media_name.split('.')[-1] }}">
+                            Your browser does not support the video tag.
+                        </video>
+                    {% else %}
+                        <!-- Display a link for unsupported files -->
+                        <a class="row__poster" href="{{ url_for('get_image', media_id=media.id) }}">{{ media.media_name }}</a>
+                    {% endif %}
+                    <p class="media-description">{{ media.descriptions }}</p>
+                    <!-- Media Actions -->
+                    <div class="media-actions">
+                        <p><a href="{{ url_for('get_image', media_id=media.id) }}">Ver Media</a></p>
+                        <!-- Enlaces para editar y eliminar -->
+                        <p><a href="{{ url_for('edit_media', media_id=media.id) }}">Editar</a></p>
+                        <p><a href="{{ url_for('delete_media', media_id=media.id) }}">Eliminar</a></p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <button class="nav-btn prev">Anterior</button>
+        <button class="nav-btn next">Siguiente</button>
+    </div>
+
+    <div class="row">
+        <a class="add-media" href="/add_media">Add More Media</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 My Media App UPMP</p>
+    </footer>
+
+    <script>
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY >= 100) {
+                nav.classList.add('nav__black');
+            } else {
+                nav.classList.remove('nav__black');
+            }
+        });
+        //
+        const navBtns = document.querySelectorAll('.nav-btn');
+        const rowPosters = document.querySelector('.row__posters');
+
+        navBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            if (btn.classList.contains('prev')) {
+            rowPosters.scrollLeft -= 300;
+            } else if (btn.classList.contains('next')) {
+            rowPosters.scrollLeft += 300;
+            }
+        });
+        });
+    </script>
+</body>
+</html>
